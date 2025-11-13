@@ -62,7 +62,5 @@ Universidad Mariano Galvez – Guatemala
 
 ---
 
----
-
 ### Enlace al Proyecto
 👉 [https://tuusuario.github.io/calculadora-probabilidades/](https://tuusuario.github.io/calculadora-probabilidades/)
