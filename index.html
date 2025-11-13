@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora de Distribuciones de Probabilidad</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    body {font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0;}
+    header {background: #004aad; color: white; text-align: center; padding: 1rem 0;}
+    .container-main {max-width:1200px; margin: 1.5rem auto;}
+    nav a {margin-right: 12px}
+    .card {margin-bottom: 1rem}
+    .formula {background:#eef5ff;border-left:4px solid #4b9cff;padding:10px;border-radius:6px}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Calculadora de Distribuciones de Probabilidad</h1>
+    <p>Proyecto educativo – Módulo III | Probabilidad y Estadística</p>
+  </header>
+
+  <main class="container-main px-3">
+    <nav class="mb-3">
+      <a class="btn btn-outline-primary btn-sm" href="#conteo">Técnicas de Conteo</a>
+      <a class="btn btn-outline-primary btn-sm" href="#probabilidad">Probabilidad</a>
+      <a class="btn btn-outline-primary btn-sm" href="#condicional">Probabilidad Condicional</a>
+      <a class="btn btn-outline-primary btn-sm" href="#bayes">Teorema de Bayes</a>
+      <a class="btn btn-outline-primary btn-sm" href="#discretas">Distribuciones Discretas</a>
+      <a class="btn btn-outline-primary btn-sm" href="#continuas">Distribuciones Continuas</a>
+      <a class="btn btn-outline-secondary btn-sm" href="#acerca">Acerca</a>
+    </nav>
+
+    <!-- Contenido: secciones en una sola página -->
+    <section id="conteo" class="card p-3">
+      <h2>Técnicas de Conteo</h2>
+      <p>Permutaciones, Permutaciones con r y Combinaciones.</p>
+      <div class="row g-2">
+        <div class="col-md-3"><label>n</label><input id="nConteo" type="number" class="form-control" value="5"></div>
+        <div class="col-md-3"><label>r (opcional)</label><input id="rConteo" type="number" class="form-control" value="3"></div>
+        <div class="col-md-3 align-self-end"><button id="btnConteo" class="btn btn-primary mt-2">Calcular</button></div>
+      </div>
+      <div id="resultadoConteo" class="mt-3"></div>
+    </section>
+
+    <section id="probabilidad" class="card p-3">
+      <h2>Conceptos Básicos de Probabilidad</h2>
+      <p>Probabilidad simple (favorables/posibles) y reglas básicas.</p>
+      <div class="row g-2">
+        <div class="col-md-3"><label>Casos favorables</label><input id="favorables" type="number" class="form-control" value="3"></div>
+        <div class="col-md-3"><label>Casos posibles</label><input id="posibles" type="number" class="form-control" value="10"></div>
+        <div class="col-md-3 align-self-end"><button id="btnProb" class="btn btn-primary mt-2">Calcular</button></div>
+      </div>
+      <div id="resultadoProbabilidad" class="mt-3"></div>
+    </section>
+
+    <section id="condicional" class="card p-3">
+      <h2>Probabilidad Condicional</h2>
+      <p>Calcule $P(A|B)=P(A\cap B)/P(B)$</p>
+      <div class="row g-2">
+        <div class="col-md-3"><label>P(A ∩ B)</label><input id="pAB" type="number" step="0.001" class="form-control" value="0.05"></div>
+        <div class="col-md-3"><label>P(B)</label><input id="pB" type="number" step="0.001" class="form-control" value="0.2"></div>
+        <div class="col-md-3 align-self-end"><button id="btnCond" class="btn btn-primary mt-2">Calcular</button></div>
+      </div>
+      <div id="resultadoCondicional" class="mt-3"></div>
+
+      <hr>
+      <h5>Aplicación con tabla 2×2</h5>
+      <div class="row g-2">
+        <div class="col-md-2"><label>A y B</label><input id="t11" type="number" class="form-control" value="30"></div>
+        <div class="col-md-2"><label>A y no B</label><input id="t12" type="number" class="form-control" value="20"></div>
+        <div class="col-md-2"><label>No A y B</label><input id="t21" type="number" class="form-control" value="10"></div>
+        <div class="col-md-2"><label>No A y no B</label><input id="t22" type="number" class="form-control" value="40"></div>
+        <div class="col-md-2 align-self-end"><button id="btnTable" class="btn btn-secondary mt-2">Calcular tabla</button></div>
+      </div>
+      <div id="table_res" class="mt-3"></div>
+    </section>
+
+    <section id="bayes" class="card p-3">
+      <h2>Teorema de Bayes</h2>
+      <p>Fórmula y aplicación (diagnósticos).</p>
+      <div class="row g-2">
+        <div class="col-md-2"><label>P(A) (previo)</label><input id="prior" type="number" step="0.0001" class="form-control" value="0.01"></div>
+        <div class="col-md-2"><label>P(B|A) (sensibilidad)</label><input id="sens" type="number" step="0.0001" class="form-control" value="0.9"></div>
+        <div class="col-md-2"><label>P(B|A^c) (falsos positivos)</label><input id="fpr" type="number" step="0.0001" class="form-control" value="0.05"></div>
+        <div class="col-md-2 align-self-end"><button id="btnBayes" class="btn btn-primary mt-2">Calcular Bayes</button></div>
+      </div>
+      <div id="bayes_res" class="mt-3"></div>
+    </section>
+
+    <section id="discretas" class="card p-3">
+      <h2>Distribuciones Discretas</h2>
+      <p>Binomial, Binomial Negativa y Poisson.</p>
+      <div class="row g-2">
+        <div class="col-md-3"><label>Distribución</label>
+          <select id="distDiscreta" class="form-select">
+            <option value="binomial">Binomial</option>
+            <option value="negativa">Binomial negativa</option>
+            <option value="poisson">Poisson</option>
+          </select>
+        </div>
+        <div class="col-md-2"><label>n / λ</label><input id="d_param1" class="form-control" type="number" value="10"></div>
+        <div class="col-md-2"><label>p / k</label><input id="d_param2" class="form-control" type="number" value="0.3"></div>
+        <div class="col-md-2"><label>k / r</label><input id="d_param3" class="form-control" type="number" value="3"></div>
+        <div class="col-md-2 align-self-end"><button id="btnDiscreta" class="btn btn-primary mt-2">Calcular</button></div>
+      </div>
+      <div id="resultadoDiscreta" class="mt-3"></div>
+      <canvas id="graficoDiscreta" height="120"></canvas>
+    </section>
+
+    <section id="continuas" class="card p-3">
+      <h2>Distribuciones Continuas</h2>
+      <p>Exponencial y Normal.</p>
+      <div class="row g-2">
+        <div class="col-md-3"><label>Distribución</label>
+          <select id="distContinua" class="form-select">
+            <option value="exponencial">Exponencial</option>
+            <option value="normal">Normal</option>
+          </select>
+        </div>
+        <div class="col-md-2"><label>λ / μ</label><input id="c_param1" class="form-control" type="number" value="0.5"></div>
+        <div class="col-md-2"><label>x / σ</label><input id="c_param2" class="form-control" type="number" value="2"></div>
+        <div class="col-md-2 align-self-end"><button id="btnContinua" class="btn btn-primary mt-2">Calcular</button></div>
+      </div>
+      <div id="resultadoContinua" class="mt-3"></div>
+      <canvas id="graficoContinua" height="120"></canvas>
+    </section>
+
+    <section id="acerca" class="card p-3">
+      <h2>Acerca de</h2>
+      <p><strong>Estudiante:</strong>Douglas Adonis Joel Perez Tello</p>
+      <p><strong>Curso:</strong> Probabilidad y Estadística – Módulo III</p>
+     
+
+      <h3>Bibliografía</h3>
+      <ul>
+        <li>Walpole, R. E., Myers, R. H., Myers, S. L. & Ye, K. (2012). <i>Probabilidad y estadística para ingenieros y científicos</i> (9ª ed.). Pearson Educación.</li>
+        <li>Devore, J. L. (2016). <i>Probabilidad y estadística para ingeniería y ciencias</i> (9ª ed.). Cengage Learning.</li>
+        <li>Montgomery, D. C. & Runger, G. C. (2018). <i>Probabilidad y estadística aplicadas a la ingeniería</i> (7ª ed.). McGraw-Hill.</li>
+        <li>Blitzstein, J. K. & Hwang, J. (2019). <i>Introduction to Probability</i> (2nd ed.). Chapman & Hall/CRC.</li>
+        <li>Freund, J. E. (2014). <i>Mathematical Statistics with Applications</i> (8th ed.). Pearson.</li>
+        <li>Ross, S. M. (2014). <i>Introduction to Probability Models</i> (11th ed.). Academic Press.</li>
+        <li>Chart.js Documentation. Recuperado de <a href="https://www.chartjs.org/docs/latest/" target="_blank">https://www.chartjs.org/docs/latest/</a></li>
+        <li>MDN Web Docs – JavaScript. Recuperado de <a href="https://developer.mozilla.org/es/" target="_blank">https://developer.mozilla.org/es/</a></li>
+        <li>MathJax Documentation. Recuperado de <a href="https://docs.mathjax.org/" target="_blank">https://docs.mathjax.org/</a></li>
+      </ul>
+    </section>
+
+    <footer class="text-center mt-4 mb-4">Calculadora de Distribuciones de Probabilidad</footer>
+  </main>
+
+  <script>
+    // Utilities
+    function fact(n){ n = Math.floor(n); if(n<0) return NaN; let r=1; for(let i=2;i<=n;i++) r*=i; return r; }
+    function comb(n,k){ if(k<0||k>n) return 0; return fact(n)/(fact(k)*fact(n-k)); }
+    function safeFloat(v, fallback=0){ const x=parseFloat(v); return isNaN(x)?fallback:x; }
+
+    // Calculate Conteo
+    function calcularConteo(){ const n = parseInt(document.getElementById('nConteo').value); const r = parseInt(document.getElementById('rConteo').value);
+      if(isNaN(n)){ document.getElementById('resultadoConteo').innerText='Introduce un n válido.'; return; }
+      const perm = fact(n);
+      let perm_r = '—';
+      let comb_v = '—';
+      if(!isNaN(r)){
+        perm_r = fact(n)/fact(n-r);
+        comb_v = comb(n,r);
+      }
+      document.getElementById('resultadoConteo').innerHTML = `<div><b>Permutaciones (n!)</b> = ${perm}</div><div><b>Permutaciones P(n,r)</b> = ${perm_r}</div><div><b>Combinaciones C(n,r)</b> = ${comb_v}</div>`;
+    }
+
+    // Probabilidad básica
+    function calcularProbabilidad(){ const fav = safeFloat(document.getElementById('favorables').value); const pos = safeFloat(document.getElementById('posibles').value);
+      if(pos<=0){ document.getElementById('resultadoProbabilidad').innerText='Casos posibles debe ser mayor que 0.'; return; }
+      const p = fav/pos; document.getElementById('resultadoProbabilidad').innerHTML = `<div><b>P(A)</b> = ${p.toFixed(6)} (${(p*100).toFixed(2)}%)</div><div class="small text-muted">Interpretación: proporción de casos favorables entre totales.</div>`;
+    }
+
+    // Condicional
+    function calcularCondicional(){ const pab = safeFloat(document.getElementById('pAB').value); const pb = safeFloat(document.getElementById('pB').value);
+      if(pb===0){ document.getElementById('resultadoCondicional').innerText='P(B) no puede ser 0.'; return; }
+      const res = pab/pb; document.getElementById('resultadoCondicional').innerHTML = `<div><b>P(A|B)</b> = ${res.toFixed(6)}</div><div class="small text-muted">Interpretación: probabilidad de A si sabemos que B ocurrió.</div>`;
+    }
+    function calcularTabla(){ const t11=safeFloat(document.getElementById('t11').value); const t12=safeFloat(document.getElementById('t12').value); const t21=safeFloat(document.getElementById('t21').value); const t22=safeFloat(document.getElementById('t22').value);
+      const total = t11+t12+t21+t22; if(total===0){ document.getElementById('table_res').innerText='Total debe ser >0'; return; }
+      const pAandB = t11/total; const pB = (t11+t21)/total; const pAgivenB = pAandB / pB; document.getElementById('table_res').innerHTML = `<div>Total=${total}</div><div>P(A∩B)=${pAandB.toFixed(6)}</div><div>P(B)=${pB.toFixed(6)}</div><div><b>P(A|B)</b>=${pAgivenB.toFixed(6)}</div>`; }
+
+    // Bayes
+    function calcularBayes(){ const prior = safeFloat(document.getElementById('prior').value); const sens = safeFloat(document.getElementById('sens').value); const fpr = safeFloat(document.getElementById('fpr').value);
+      const pB = sens*prior + fpr*(1-prior); if(pB===0){ document.getElementById('bayes_res').innerText='P(B) calculado = 0. Revise parámetros.'; return; }
+      const post = (sens*prior)/pB; document.getElementById('bayes_res').innerHTML = `<div><b>P(B)</b> = ${pB.toFixed(6)}</div><div><b>P(A|B)</b> = ${post.toFixed(6)} (${(post*100).toFixed(2)}%)</div><div class="small text-muted">Interpretación: probabilidad posterior de A dado test positivo.</div>`; }
+
+    // Distribuciones discretas
+    let chartDiscreta = null;
+    function calcularDiscreta(){ const dist = document.getElementById('distDiscreta').value; const p1 = safeFloat(document.getElementById('d_param1').value); const p2 = safeFloat(document.getElementById('d_param2').value); const p3 = safeFloat(document.getElementById('d_param3').value);
+      const resDiv = document.getElementById('resultadoDiscreta');
+      const ctx = document.getElementById('graficoDiscreta');
+      if(dist==='binomial'){
+        const n = Math.max(0, Math.floor(p1)); const p = Math.min(1, Math.max(0, p2)); const k = Math.max(0, Math.floor(p3));
+        const val = binomPMF(n,k,p); resDiv.innerHTML = `<div class="formula">\(P(X=${k})=\binom{${n}}{${k}} ${p}^{${k}}(1-${p})^{${n-k}}\)</div><div><b>Resultado:</b> ${val.toFixed(8)}</div>`; MathJax.typesetPromise();
+        const labels = Array.from({length: n+1}, (_,i)=>i); const data = labels.map(i=>binomPMF(n,i,p));
+        renderBarChart(chartDiscreta, ctx, labels, data, 'P(X=k)');
+      } else if(dist==='negativa'){
+        const r = Math.max(1, Math.floor(p3)); const p = Math.min(1, Math.max(0, p2)); const k = Math.max(r, Math.floor(p1)); // using input mapping flexible
+        const val = negBinPMF(r,k,p); resDiv.innerHTML = `<div><b>P(X=${k})</b> = ${val.toFixed(8)}</div><div class="small text-muted">Interpretación: probabilidad de que el r-ésimo éxito ocurra en ensayo k.</div>`;
+        const maxK = Math.max(k, r+10); const labels = Array.from({length: maxK - r + 1}, (_,i)=>i + r); const data = labels.map(i=>negBinPMF(r,i,p)); renderBarChart(chartDiscreta, ctx, labels, data, 'P(X=k)');
+      } else { // poisson
+        const lambda = Math.max(0, p1); const k = Math.max(0, Math.floor(p3)); const val = poissonPMF(lambda,k); resDiv.innerHTML = `<div class="formula">\(P(X=${k})=e^{-\lambda}\dfrac{\lambda^{${k}}}{${k}!}\)</div><div><b>Resultado:</b> ${val.toFixed(8)}</div>`; MathJax.typesetPromise();
+        const max = Math.max(10, Math.ceil(lambda*4)); const labels = Array.from({length: max+1}, (_,i)=>i); const data = labels.map(i=>poissonPMF(lambda,i)); renderBarChart(chartDiscreta, ctx, labels, data, 'P(X=k)');
+      }
+    }
+
+    // Distribuciones continuas
+    let chartContinua = null;
+    function calcularContinua(){ const dist = document.getElementById('distContinua').value; const p1 = safeFloat(document.getElementById('c_param1').value); const p2 = safeFloat(document.getElementById('c_param2').value);
+      const resDiv = document.getElementById('resultadoContinua'); const ctx = document.getElementById('graficoContinua');
+      if(dist==='exponencial'){
+        const lambda = Math.max(0.000001, p1); const x = Math.max(0, p2);
+        const pdf = expPDF(lambda,x); const cdf = expCDF(lambda,x);
+        resDiv.innerHTML = `<div><b>f(${x})</b> = ${pdf.toFixed(8)}</div><div><b>P(X≤${x})</b> = ${cdf.toFixed(8)}</div>`;
+        const xs = Array.from({length:200},(_,i)=>i*(8/lambda)/199);
+        const data = xs.map(v=>expPDF(lambda,v)); renderLineChart(chartContinua, ctx, xs, data, 'f(x)');
+      } else {
+        const mu = p1; const sigma = Math.max(0.000001, p2);
+        const x = safeFloat(document.getElementById('c_param2').value);
+        const pdf = normalPDF(x,mu,sigma); const cdf = normalCDF(x,mu,sigma);
+        resDiv.innerHTML = `<div><b>Z</b> = ${((x-mu)/sigma).toFixed(6)}</div><div><b>P(X≤${x})</b> = ${cdf.toFixed(8)}</div><div><b>f(${x})</b> = ${pdf.toFixed(8)}</div>`;
+        const xs = Array.from({length:300},(_,i)=>mu-4*sigma + i*(8*sigma/299)); const data = xs.map(v=>normalPDF(v,mu,sigma)); renderLineChart(chartContinua, ctx, xs, data, 'f(x)');
+      }
+    }
+
+    // Helpers for charts
+    function renderBarChart(chartRef, canvas, labels, data, label){ if(chartRef) chartRef.destroy(); chartRef = new Chart(canvas.getContext('2d'), {type:'bar', data:{labels, datasets:[{label, data}]}, options:{responsive:true}}); if(canvas.id==='graficoDiscreta') chartDiscreta = chartRef; else if(canvas.id==='graficoContinua') chartContinua = chartRef; }
+    function renderLineChart(chartRef, canvas, labels, data, label){ if(chartRef) chartRef.destroy(); chartRef = new Chart(canvas.getContext('2d'), {type:'line', data:{labels, datasets:[{label, data, fill:false, tension:0.2}]}, options:{responsive:true, scales:{x:{display:true}}}}); if(canvas.id==='graficoContinua') chartContinua = chartRef; else if(canvas.id==='graficoDiscreta') chartDiscreta = chartRef; }
+
+    // PMFs / PDFs
+    function binomPMF(n,k,p){ if(k<0||k>n) return 0; return comb(n,k)*Math.pow(p,k)*Math.pow(1-p,n-k); }
+    function negBinPMF(r,k,p){ if(k<r) return 0; return comb(k-1,r-1)*Math.pow(p,r)*Math.pow(1-p,k-r); }
+    function poissonPMF(lambda,k){ return Math.exp(-lambda)*Math.pow(lambda,k)/fact(k); }
+    function expPDF(lambda,x){ return lambda*Math.exp(-lambda*x); }
+    function expCDF(lambda,x){ return 1-Math.exp(-lambda*x); }
+    function normalPDF(x,mu,sigma){ return (1/(sigma*Math.sqrt(2*Math.PI)))*Math.exp(-Math.pow((x-mu),2)/(2*sigma*sigma)); }
+    function erf(x){ const sign = x>=0?1:-1; x = Math.abs(x); const a1=0.254829592,a2=-0.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429,p=0.3275911; const t=1/(1+p*x); const y=1-((((a5*t+a4)*t+a3)*t+a2)*t+a1)*t*Math.exp(-x*x); return sign*y; }
+    function normalCDF(x,mu,sigma){ return 0.5*(1+erf((x-mu)/(sigma*Math.sqrt(2)))); }
+
+    // Event listeners
+    document.getElementById('btnConteo').addEventListener('click', calcularConteo);
+    document.getElementById('btnProb').addEventListener('click', calcularProbabilidad);
+    document.getElementById('btnCond').addEventListener('click', calcularCondicional);
+    document.getElementById('btnTable').addEventListener('click', calcularTabla);
+    document.getElementById('btnBayes').addEventListener('click', calcularBayes);
+    document.getElementById('btnDiscreta').addEventListener('click', calcularDiscreta);
+    document.getElementById('btnContinua').addEventListener('click', calcularContinua);
+
+    // Initialize MathJax typesetting once
+    window.addEventListener('load', ()=>{ MathJax.typesetPromise && MathJax.typesetPromise(); });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
