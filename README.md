@@ -62,10 +62,6 @@ Universidad Mariano Galvez – Guatemala
 
 ---
 
-## Licencia
-
-Este proyecto se distribuye bajo la licencia **MIT**, lo que significa que puedes usarlo, modificarlo y compartirlo libremente, siempre dando el crédito correspondiente al autor original.
-
 ---
 
 ### Enlace al Proyecto
